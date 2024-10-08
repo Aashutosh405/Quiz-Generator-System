@@ -44,16 +44,15 @@ The web interface is built using HTML, CSS, and jQuery. The user provides a para
 
 ## Demonstration Video
 You can watch the complete demonstration of the project in the following video:
-[![Watch the video](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/rRn4z0iabTE)
+[![Watch the video](Science-Quiz.png)](https://youtu.be/rRn4z0iabTE)
 
 
 ## Future Improvements
 Here are some potential future enhancements to the project:
 - **Improving Question Complexity**: Allowing for more complex, multi-part questions or open-ended questions.
-- **Enhanced Summarization**: Implementing a more advanced summarization technique to ensure the content is concise but informative.
 - **Question Validation**: Incorporating a feedback system where users can rate the quality of the generated questions and distractors.
 - **Faster Processing**: Optimizing model inference time to reduce the 4-5 minute wait period.
 - **Supporting Additional Languages**: Extending the application to support multiple languages for international users.
-- **Custom Model Training**: Allowing users to upload their own dataset for more domain-specific question generation.
+
 
 
