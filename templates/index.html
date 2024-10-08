@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Generator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .question {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        #questions {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        #questions::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #questions::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+
+        #questions::-webkit-scrollbar-thumb:hover {
+            background-color: #aaa;
+        }
+
+        /* Style for the loading message */
+        #loading-message {
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Question Generator</h1>
+
+        <form id="inputForm">
+            <label for="paragraph">Enter a Paragraph:</label><br>
+            <textarea id="paragraph" name="paragraph" rows="6" cols="60"></textarea><br><br>
+            <button type="submit">Generate Questions</button>
+        </form>
+
+        <h2>Generated Questions</h2>
+        <div id="loading-message">Questions are being generated, kindly have patience...</div>
+        <div id="questions"></div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#inputForm').on('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+                
+                // Show the loading message and hide the questions section
+                $('#loading-message').show();
+                $('#questions').empty().hide();
+
+                // Send the paragraph to the backend
+                $.ajax({
+                    url: '/generate_questions',
+                    type: 'POST',
+                    data: { paragraph: $('#paragraph').val() },
+                    success: function (response) {
+                        console.log(response);  // Log the response to the console for debugging
+
+                        $('#loading-message').hide(); // Hide the loading message
+                        $('#questions').show(); // Show the questions container
+
+                        // Display the generated questions
+                        response.forEach(function (questionData, index) {
+                            $('#questions').append(
+                                '<div class="question">' +
+                                '<p><strong>Question ' + (index + 1) + ':</strong> ' + questionData.question + '</p>' +
+                                '<p><strong>Options:</strong> ' + questionData.options.join(', ') + '</p>' +
+                                '<p><strong>Answer:</strong> ' + questionData.answer + '</p>' +
+                                '</div>'
+                            );
+                        });
+                    },
+                    error: function () {
+                        $('#loading-message').hide(); // Hide the loading message
+                        $('#questions').html('<p>An error occurred while generating questions.</p>').show();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
