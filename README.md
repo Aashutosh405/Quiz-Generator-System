@@ -44,7 +44,7 @@ The web interface is built using HTML, CSS, and jQuery. The user provides a para
 
 ## Demonstration Video
 You can watch the complete demonstration of the project in the following video:
-[![Watch the video](Science-Quiz.png)](https://youtu.be/rRn4z0iabTE)
+[![Watch the video](Quiz_Generator_Application_Interface.jpg)](https://youtu.be/rRn4z0iabTE)
 
 
 ## Future Improvements
